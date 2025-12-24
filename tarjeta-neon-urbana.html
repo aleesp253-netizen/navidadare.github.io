@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Neon-Urbana - Abogada y Basquetbolista</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            background: linear-gradient(180deg, 
+                #0a0e27 0%, 
+                #1a1f3a 30%, 
+                #2d2b55 60%, 
+                #3d3561 80%, 
+                #4a3f7a 95%, 
+                #5a4a8a 100%);
+        }
+
+        /* Luces de ciudad lejanas */
+        .city-lights {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .city-light {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: lightFlicker 4s infinite;
+        }
+
+        @keyframes lightFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Skyline de la ciudad */
+        .city-skyline {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 200px;
+            background: #0a0a0a;
+            clip-path: polygon(
+                0% 100%, 0% 75%, 3% 75%, 3% 60%, 6% 60%, 6% 45%, 9% 45%, 9% 70%, 
+                12% 70%, 12% 40%, 15% 40%, 15% 65%, 18% 65%, 18% 35%, 21% 35%, 
+                21% 75%, 24% 75%, 24% 30%, 27% 30%, 27% 80%, 30% 80%, 30% 25%, 
+                33% 25%, 33% 85%, 36% 85%, 36% 20%, 39% 20%, 39% 90%, 42% 90%, 
+                42% 15%, 45% 15%, 45% 95%, 48% 95%, 48% 10%, 51% 10%, 51% 100%, 
+                54% 100%, 54% 12%, 57% 12%, 57% 100%, 60% 100%, 60% 18%, 63% 18%, 
+                63% 100%, 66% 100%, 66% 25%, 69% 25%, 69% 100%, 72% 100%, 
+                72% 30%, 75% 30%, 75% 100%, 78% 100%, 78% 35%, 81% 35%, 
+                81% 100%, 84% 100%, 84% 40%, 87% 40%, 87% 100%, 90% 100%, 
+                90% 45%, 93% 45%, 93% 100%, 96% 100%, 96% 50%, 99% 50%, 
+                99% 100%, 100% 100%
+            );
+            opacity: 0.9;
+        }
+
+        /* Asfalto mojado con reflejos */
+        .wet-ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(0deg, 
+                rgba(10, 10, 10, 0.9) 0%, 
+                rgba(20, 20, 30, 0.7) 50%, 
+                transparent 100%);
+            overflow: hidden;
+        }
+
+        .neon-reflection {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 215, 0, 0.1) 10px,
+                rgba(255, 215, 0, 0.1) 20px,
+                rgba(255, 140, 0, 0.1) 20px,
+                rgba(255, 140, 0, 0.1) 30px
+            );
+            animation: reflectionFlow 8s infinite linear;
+            filter: blur(2px);
+        }
+
+        @keyframes reflectionFlow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(30px); }
+        }
+
+        /* Título principal */
+        .main-title {
+            position: absolute;
+            top: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.6),
+                0 0 25px rgba(255, 215, 0, 0.4),
+                0 0 35px rgba(255, 215, 0, 0.3);
+            animation: titleProgressiveOn 3s ease-out;
+            z-index: 10;
+            padding: 0 20px;
+            max-width: 90%;
+        }
+
+        @keyframes titleProgressiveOn {
+            0% { 
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateX(-50%) scale(0.8);
+            }
+            50% {
+                opacity: 0.5;
+                filter: blur(5px);
+                transform: translateX(-50%) scale(1.05);
+            }
+            100% { 
+                opacity: 1;
+                filter: blur(0);
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* Vallas publicitarias urbanas */
+        .billboard {
+            position: absolute;
+            bottom: 80px;
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.8), rgba(30, 30, 40, 0.8));
+            border: 1px solid rgba(255, 140, 0, 0.4);
+            border-radius: 2px;
+            transform: perspective(100px) rotateX(10deg);
+        }
+
+        .billboard-1 {
+            left: 10%;
+            animation: billboardFlicker 5s infinite;
+        }
+
+        .billboard-2 {
+            right: 15%;
+            animation: billboardFlicker 5s infinite 2s;
+        }
+
+        @keyframes billboardFlicker {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Postes de luz urbana */
+        .streetlight {
+            position: absolute;
+            bottom: 60px;
+            width: 3px;
+            height: 120px;
+            background: linear-gradient(0deg, #333, #666);
+        }
+
+        .streetlight-1 {
+            left: 25%;
+        }
+
+        .streetlight-2 {
+            right: 30%;
+        }
+
+        .light-glow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            border-radius: 50%;
+            animation: lightPulse 4s infinite alternate;
+        }
+
+        @keyframes lightPulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Grafiti urbano */
+        .graffiti {
+            position: absolute;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.2rem;
+            color: rgba(255, 140, 0, 0.6);
+            transform: rotate(-5deg);
+            opacity: 0.7;
+        }
+
+        .graffiti-1 {
+            bottom: 120px;
+            left: 8%;
+            animation: graffitiFade 6s infinite;
+        }
+
+        .graffiti-2 {
+            bottom: 100px;
+            right: 10%;
+            animation: graffitiFade 6s infinite 3s;
+        }
+
+        @keyframes graffitiFade {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Tuberías industriales */
+        .pipes {
+            position: absolute;
+            bottom: 150px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+        }
+
+        .pipe {
+            position: absolute;
+            height: 8px;
+            background: linear-gradient(90deg, #444, #666, #444);
+            border-radius: 4px;
+        }
+
+        .pipe-1 {
+            width: 200px;
+            left: 5%;
+            bottom: 0;
+        }
+
+        .pipe-2 {
+            width: 150px;
+            right: 20%;
+            bottom: 10px;
+        }
+
+        /* Ventanas con luz */
+        .building-windows {
+            position: absolute;
+            bottom: 200px;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+        }
+
+        .window-light {
+            position: absolute;
+            width: 4px;
+            height: 6px;
+            background: rgba(255, 215, 0, 0.8);
+            animation: windowLightFlicker 3s infinite;
+        }
+
+        @keyframes windowLightFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.9; }
+        }
+
+        /* Contenedor de elementos */
+        .elements-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 1200px;
+            height: 400px;
+            z-index: 5;
+        }
+
+        /* Iconos con animación de flotación */
+        .icon {
+            animation: gentleFloat 4s infinite ease-in-out;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+
+        /* Aro de básquetbol urbano */
+        .basketball-hoop {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            color: rgba(255, 140, 0, 0.8);
+            filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.6));
+            animation: gentleFloat 4s infinite ease-in-out 2s;
+        }
+
+        /* Balón de básquetbol con pulsación */
+        .basketball {
+            position: absolute;
+            top: 45%;
+            right: 20%;
+            color: rgba(255, 140, 0, 0.8);
+            filter: drop-shadow(0 0 20px rgba(255, 140, 0, 0.7));
+            animation: gentleFloat 3.5s infinite ease-in-out 1.5s, ballPulse 3s infinite alternate;
+        }
+
+        @keyframes ballPulse {
+            0% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(255, 140, 0, 0.7));
+            }
+            100% { 
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 25px rgba(255, 140, 0, 0.9));
+            }
+        }
+
+        /* Marcador digital */
+        .scoreboard {
+            position: absolute;
+            bottom: 25%;
+            right: 8%;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8), rgba(20, 20, 30, 0.8));
+            border: 1px solid rgba(255, 140, 0, 0.6);
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(255, 140, 0, 0.9);
+            text-shadow: 
+                0 0 10px rgba(255, 140, 0, 0.6),
+                0 0 20px rgba(255, 140, 0, 0.4);
+            animation: gentleFloat 3s infinite ease-in-out, scoreboardGlow 4s infinite alternate;
+        }
+
+        @keyframes scoreboardGlow {
+            0% { 
+                border-color: rgba(255, 140, 0, 0.4);
+                text-shadow: 
+                    0 0 10px rgba(255, 140, 0, 0.6),
+                    0 0 20px rgba(255, 140, 0, 0.4);
+            }
+            100% { 
+                border-color: rgba(255, 140, 0, 0.8);
+                text-shadow: 
+                    0 0 15px rgba(255, 140, 0, 0.8),
+                    0 0 25px rgba(255, 140, 0, 0.6);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 1.5rem;
+                top: 8%;
+            }
+            
+            .icon {
+                transform: scale(0.7);
+            }
+            
+            .scoreboard {
+                font-size: 1.2rem;
+                padding: 10px 15px;
+            }
+            
+            .city-skyline {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Luces de ciudad lejanas -->
+    <div class="city-lights" id="cityLights"></div>
+    
+    <!-- Skyline de la ciudad -->
+    <div class="city-skyline"></div>
+    
+    <!-- Asfalto mojado con reflejos -->
+    <div class="wet-ground">
+        <div class="neon-reflection"></div>
+    </div>
+    
+    <!-- Vallas publicitarias -->
+    <div class="billboard billboard-1"></div>
+    <div class="billboard billboard-2"></div>
+    
+    <!-- Postes de luz urbana -->
+    <div class="streetlight streetlight-1">
+        <div class="light-glow"></div>
+    </div>
+    <div class="streetlight streetlight-2">
+        <div class="light-glow"></div>
+    </div>
+    
+    <!-- Grafiti urbano -->
+    <div class="graffiti graffiti-1">STREET</div>
+    <div class="graffiti graffiti-2">BALL</div>
+    
+    <!-- Tuberías industriales -->
+    <div class="pipes">
+        <div class="pipe pipe-1"></div>
+        <div class="pipe pipe-2"></div>
+    </div>
+    
+    <!-- Ventanas con luz -->
+    <div class="building-windows" id="buildingWindows"></div>
+    
+    <!-- Título principal -->
+    <h1 class="main-title">Feliz Navidad mi mejor amiga y basquetbolista</h1>
+    
+    
+    <!-- Elementos de Básquetbol -->
+    <div class="basketball-hoop icon">
+        <svg width="120" height="140" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tablero de cristal -->
+            <rect x="20" y="10" width="80" height="50" rx="5" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Cuadro interior -->
+            <rect x="35" y="20" width="50" height="30" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <!-- Aro -->
+            <circle cx="60" cy="75" r="25" stroke="currentColor" stroke-width="3" fill="none"/>
+            <!-- Red -->
+            <path d="M35 75 L40 100 M45 75 L47 100 M55 75 L57 100 M65 75 L67 100 M73 75 L75 100 M83 75 L85 100" 
+                  stroke="currentColor" stroke-width="1" opacity="0.7"/>
+        </svg>
+    </div>
+    
+    <div class="basketball icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="35" stroke="currentColor" stroke-width="3" fill="none"/>
+            <path d="M40 5 Q40 40 40 75 M5 40 Q40 40 75 40" stroke="currentColor" stroke-width="2"/>
+            <path d="M15 25 Q40 40 65 25 M15 55 Q40 40 65 55" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+        </svg>
+    </div>
+    
+    <div class="scoreboard">
+        25 - 12
+    </div>
+    
+    <script>
+        // Generar luces de ciudad
+        function generateCityLights() {
+            const container = document.getElementById('cityLights');
+            const numberOfLights = 40;
+            
+            for (let i = 0; i < numberOfLights; i++) {
+                const light = document.createElement('div');
+                light.className = 'city-light';
+                light.style.left = Math.random() * 100 + '%';
+                light.style.top = Math.random() * 60 + '%';
+                light.style.animationDelay = Math.random() * 4 + 's';
+                light.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                container.appendChild(light);
+            }
+        }
+        
+        // Generar ventanas con luz
+        function generateWindowLights() {
+            const container = document.getElementById('buildingWindows');
+            const windowPositions = [
+                {x: 8, y: 20}, {x: 12, y: 20}, {x: 16, y: 20},
+                {x: 8, y: 35}, {x: 12, y: 35}, {x: 16, y: 35},
+                {x: 8, y: 50}, {x: 12, y: 50}, {x: 16, y: 50},
+                {x: 75, y: 15}, {x: 80, y: 15}, {x: 85, y: 15},
+                {x: 75, y: 30}, {x: 80, y: 30}, {x: 85, y: 30},
+                {x: 75, y: 45}, {x: 80, y: 45}, {x: 85, y: 45},
+                {x: 45, y: 25}, {x: 50, y: 25}, {x: 55, y: 25},
+                {x: 45, y: 40}, {x: 50, y: 40}, {x: 55, y: 40}
+            ];
+            
+            windowPositions.forEach((pos, index) => {
+                const window = document.createElement('div');
+                window.className = 'window-light';
+                window.style.left = pos.x + '%';
+                window.style.bottom = pos.y + '%';
+                window.style.animationDelay = (index * 0.2) + 's';
+                container.appendChild(window);
+            });
+        }
+        
+        // Inicializar
+        generateCityLights();
+        generateWindowLights();
+        
+        // Efecto interactividad sutil
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // Movimiento sutil del título
+            const title = document.querySelector('.main-title');
+            if (title) {
+                title.style.transform = `translateX(calc(-50% + ${(x - 0.5) * 8}px))`;
+            }
+        });
+        
+        // Encendido progresivo de elementos
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('.icon, .scoreboard');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    element.style.transition = 'all 1s ease-out';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 800 + (index * 200));
+            });
+        });
+    </script>
+</body>
+</html>
